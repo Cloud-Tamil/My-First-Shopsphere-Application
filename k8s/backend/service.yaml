@@ -1,46 +1,27 @@
-server {
+apiVersion: v1
 
-    listen 80;
+kind: Service
 
-    server_name _;
+metadata:
 
+  name: backend
 
-    root /usr/share/nginx/html;
+  namespace: shopsphere
 
-    index index.html;
+spec:
 
-
-    location / {
-
-        try_files
-            $uri
-            $uri/
-            /index.html;
-
-    }
+  type: ClusterIP
 
 
-    location /api/ {
+  selector:
 
-        proxy_pass
-            http://backend:8000/api/;
-
-        proxy_http_version 1.1;
-
-        proxy_set_header
-            Host $host;
-
-        proxy_set_header
-            X-Real-IP $remote_addr;
-
-    }
+    app: backend
 
 
-    location /health {
+  ports:
 
-        proxy_pass
-            http://backend:8000/health;
+    - port: 8000
 
-    }
+      targetPort: 8000
 
-}
+      protocol: TCP
