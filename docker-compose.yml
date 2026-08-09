@@ -1,1 +1,66 @@
+services:
 
+  postgres:
+
+    image: postgres:16
+
+    environment:
+
+      POSTGRES_DB: shopsphere
+
+      POSTGRES_USER: shopsphere
+
+      POSTGRES_PASSWORD: shopsphere
+
+    ports:
+
+      - "5432:5432"
+
+    volumes:
+
+      - postgres_data:/var/lib/postgresql/data
+
+
+  backend:
+
+    build:
+      context: ./backend
+
+    environment:
+
+      DB_HOST: postgres
+
+      DB_PORT: 5432
+
+      DB_NAME: shopsphere
+
+      DB_USER: shopsphere
+
+      DB_PASSWORD: shopsphere
+
+    ports:
+
+      - "8000:8000"
+
+    depends_on:
+
+      - postgres
+
+
+  frontend:
+
+    build:
+      context: ./frontend
+
+    ports:
+
+      - "8080:80"
+
+    depends_on:
+
+      - backend
+
+
+volumes:
+
+  postgres_data:
