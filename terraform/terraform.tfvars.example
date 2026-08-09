@@ -1,1 +1,11 @@
+aws_region = "ap-south-1"
 
+project_name = "shopsphere"
+
+environment = "dev"
+
+vpc_cidr = "10.0.0.0/16"
+
+db_username = "shopsphere"
+
+db_password = "CHANGE_THIS_PASSWORD"
